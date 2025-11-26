@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conference Room Reservations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="logo">RoomBook</div>
+        <div class="room-links" aria-label="Room shortcuts">
+          <button type="button" class="chip room-shortcut" data-room="215">215</button>
+          <button type="button" class="chip room-shortcut" data-room="216">216</button>
+          <button type="button" class="chip room-shortcut" data-room="217">217</button>
+          <button type="button" class="chip room-shortcut" data-room="218">218</button>
+          <button type="button" class="chip room-shortcut" data-room="219">219</button>
+          <button type="button" class="chip room-shortcut" data-room="220">220</button>
+          <button type="button" class="chip room-shortcut" data-room="Chicago Room">Chicago Room</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="newBookingBtn">Book this room</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="calendar-panel">
+        <div class="calendar-header">
+          <div class="month-nav">
+            <button class="ghost" id="prevMonth" aria-label="Previous month">&#x2039;</button>
+            <h1 id="monthLabel"></h1>
+            <button class="ghost" id="nextMonth" aria-label="Next month">&#x203A;</button>
+          </div>
+          <div class="quick-selects">
+            <button class="ghost" data-offset="0">Today</button>
+            <button class="ghost" data-offset="7">+1 week</button>
+            <button class="ghost" data-offset="30">+1 month</button>
+          </div>
+        </div>
+        <div class="calendar" id="calendar"></div>
+      </section>
+
+      <aside class="side-panel">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Next available date</p>
+              <h2 id="nextAvailable">—</h2>
+            </div>
+            <span class="badge muted">7 rooms</span>
+          </div>
+          <p class="muted">All rooms: 215, 216, 217, 218, 219, 220, Chicago Room</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Latest bookings</h3>
+            <button class="link" id="clearBookings">Clear</button>
+          </div>
+          <ul class="booking-list" id="latestBookings"></ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>New booking</h3>
+          </div>
+          <form id="bookingForm" class="form">
+            <label class="field">
+              <span>Meeting title</span>
+              <input type="text" id="meetingName" name="meeting" placeholder="e.g. Product sync" required />
+            </label>
+            <label class="field">
+              <span>Reserved by</span>
+              <input type="text" id="reservedBy" name="reservedBy" placeholder="Your name" required />
+            </label>
+            <label class="field">
+              <span>Room</span>
+              <select id="room" required>
+                <option value="">Select a room</option>
+                <option>215</option>
+                <option>216</option>
+                <option>217</option>
+                <option>218</option>
+                <option>219</option>
+                <option>220</option>
+                <option>Chicago Room</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Date</span>
+              <input type="date" id="date" required />
+            </label>
+            <div class="form-actions">
+              <button type="button" class="ghost" id="offsetWeek">+1 week</button>
+              <button type="button" class="ghost" id="offsetMonth">+1 month</button>
+              <button type="submit" class="primary">Reserve</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <template id="bookingItemTemplate">
+    <li class="booking-item">
+      <div>
+        <p class="booking-title"></p>
+        <p class="booking-meta"></p>
+      </div>
+      <span class="badge"></span>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
