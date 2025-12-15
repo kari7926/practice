@@ -1,0 +1,29 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # 1. Buildozer(변환기)를 설치하고 실행하는 단계
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          workdir: .
+          buildozer_version: stable
+
+      # 2. 만들어진 APK 파일을 업로드하는 단계
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-android-app
+          path: bin/*.apk
