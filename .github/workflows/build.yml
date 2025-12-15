@@ -1,10 +1,5 @@
 name: Build APK
-
-on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+on: [push]
 
 jobs:
   build:
@@ -13,17 +8,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 1. Buildozer(변환기)를 설치하고 실행하는 단계
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+      # 1. 파이썬 및 필수 도구 설치
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          workdir: .
-          buildozer_version: stable
+          python-version: '3.9'
 
-      # 2. 만들어진 APK 파일을 업로드하는 단계
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev openjdk-17-jdk unzip zip
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.33
+
+      # 2. 빌드 시작 (설계도 buildozer.spec을 읽어서 실행)
+      - name: Build with Buildozer
+        run: |
+          yes | buildozer android debug
+
+      # 3. 결과물(APK) 업로드
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: my-android-app
+          name: package
           path: bin/*.apk
