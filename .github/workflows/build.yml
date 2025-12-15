@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 1. 파이썬 및 필수 도구 설치
+      # 1. 파이썬 및 필수 도구 설치 (가장 안정적인 버전)
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -21,7 +21,7 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython==0.29.33
 
-      # 2. 빌드 시작 (설계도 buildozer.spec을 읽어서 실행)
+      # 2. 빌드 시작 (yes 명령어로 자동 승인)
       - name: Build with Buildozer
         run: |
           yes | buildozer android debug
